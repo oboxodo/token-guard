@@ -75,8 +75,8 @@ $ token-guard create -h
     const tokenGuardState = await initialize(
       program,
       provider,
-      flags.gatekeeperNetwork,
       flags.recipient,
+      flags.gatekeeperNetwork,
       flags.startTime,
       flags.allowance,
       flags.maxAmount,
@@ -90,7 +90,11 @@ Mint: ${tokenGuardState.outMint}
 
 Additional Details:
 
-GatekeeperNetwork: ${tokenGuardState.gatekeeperNetwork}
+${
+  tokenGuardState.gatekeeperNetwork
+    ? `GatekeeperNetwork: ${tokenGuardState.gatekeeperNetwork}`
+    : "GatekeeperNetwork: Not required"
+}
 Recipient: ${tokenGuardState.recipient}
 MintAuthority: ${tokenGuardState.mintAuthority}
 ${

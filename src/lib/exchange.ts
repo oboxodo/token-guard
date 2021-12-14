@@ -1,4 +1,4 @@
-import { findGatewayToken } from "@identity.com/solana-gateway-ts";
+import { findGatewayToken, GatewayToken } from "@identity.com/solana-gateway-ts";
 import * as anchor from "@project-serum/anchor";
 import { Program, web3 } from "@project-serum/anchor";
 
@@ -24,19 +24,23 @@ export const exchange = async (
   tokenGuard: anchor.web3.PublicKey,
   sender: anchor.web3.PublicKey,
   payer: anchor.web3.PublicKey,
-  gatekeeperNetwork: anchor.web3.PublicKey,
   amount: number,
+  gatekeeperNetwork?: anchor.web3.PublicKey,
   membershipTokenAccount?: anchor.web3.PublicKey
 ): Promise<TransactionInstruction[]> => {
   const tokenGuardAccount = await program.account.tokenGuard.fetch(tokenGuard);
   const senderAta = await getTokenWallet(sender, tokenGuardAccount.outMint);
+  let gatewayToken: GatewayToken | null = null;
 
-  const gatewayToken = await findGatewayToken(
-    connection,
-    sender,
-    gatekeeperNetwork
-  );
-  if (!gatewayToken) throw new Error("Wallet has no gateway token");
+  if (gatekeeperNetwork) {
+    gatewayToken = await findGatewayToken(
+      connection,
+      sender,
+      gatekeeperNetwork
+    );
+
+    if (!gatewayToken) throw new Error("Wallet has no gateway token");
+  }
 
   const [mintAuthority] = await deriveMintAuthority(tokenGuard, program);
 
@@ -96,8 +100,8 @@ export const exchange = async (
         recipient: tokenGuardAccount.recipient,
         outMint: tokenGuardAccount.outMint,
         mintAuthority,
-        gatewayToken: gatewayToken.publicKey,
         allowanceAccount,
+        gatewayToken: gatewayToken.publicKey,
         tokenProgram: TOKEN_PROGRAM_ID,
         systemProgram: anchor.web3.SystemProgram.programId,
         clock: web3.SYSVAR_CLOCK_PUBKEY,

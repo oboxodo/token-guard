@@ -186,8 +186,8 @@ describe("token-guard", () => {
       tokenGuardState = await initialize(
         program,
         provider,
-        gatekeeperNetwork.publicKey,
-        recipient.publicKey
+        recipient.publicKey,
+        gatekeeperNetwork.publicKey
       );
 
       console.log({
@@ -230,8 +230,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         sender.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount
+        exchangeAmount,
+        gatekeeperNetwork.publicKey
       );
 
       await sendTransactionFromSender(instructions);
@@ -267,8 +267,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         provider.wallet.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount
+        exchangeAmount,
+        gatekeeperNetwork.publicKey
       );
 
       const { burnerATA, createBurnerATAInstruction } = await createBurnerATA(
@@ -295,8 +295,8 @@ describe("token-guard", () => {
       tokenGuardState = await initialize(
         program,
         provider,
-        gatekeeperNetwork.publicKey,
         recipient.publicKey,
+        gatekeeperNetwork.publicKey,
         Date.now() + 1_000_000
       );
     });
@@ -311,8 +311,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         provider.wallet.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount
+        exchangeAmount,
+        gatekeeperNetwork.publicKey
       );
 
       const { burnerATA, createBurnerATAInstruction } = await createBurnerATA(
@@ -341,8 +341,8 @@ describe("token-guard", () => {
       tokenGuardState = await initialize(
         program,
         provider,
-        gatekeeperNetwork.publicKey,
         recipient.publicKey,
+        gatekeeperNetwork.publicKey,
         undefined,
         2
       );
@@ -355,8 +355,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         sender.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount
+        exchangeAmount,
+        gatekeeperNetwork.publicKey
       );
 
       console.log("First exchange");
@@ -376,8 +376,8 @@ describe("token-guard", () => {
       tokenGuardState = await initialize(
         program,
         provider,
-        gatekeeperNetwork.publicKey,
         recipient.publicKey,
+        gatekeeperNetwork.publicKey,
         undefined,
         undefined,
         exchangeAmount - 100 // smaller than the exchange amount
@@ -391,8 +391,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         sender.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount
+        exchangeAmount,
+        gatekeeperNetwork.publicKey
       );
 
       const instructionsForAnExchangeThatIsSmallEnough = await exchange(
@@ -401,8 +401,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         sender.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount - 100
+        exchangeAmount - 100,
+        gatekeeperNetwork.publicKey
       );
 
       await sendTransactionFromSender(
@@ -439,8 +439,8 @@ describe("token-guard", () => {
         tokenGuardState = await initialize(
           program,
           provider,
-          gatekeeperNetwork.publicKey,
           recipient.publicKey,
+          gatekeeperNetwork.publicKey,
           undefined,
           undefined,
           undefined,
@@ -458,8 +458,8 @@ describe("token-guard", () => {
           tokenGuardState.id,
           sender.publicKey,
           sender.publicKey,
-          gatekeeperNetwork.publicKey,
-          exchangeAmount
+          exchangeAmount,
+          gatekeeperNetwork.publicKey
         );
 
         return expect(shouldFail).to.be.rejectedWith(
@@ -478,8 +478,8 @@ describe("token-guard", () => {
           tokenGuardState.id,
           sender.publicKey,
           sender.publicKey,
-          gatekeeperNetwork.publicKey,
           exchangeAmount,
+          gatekeeperNetwork.publicKey,
           senderMembershipTokenATA
         );
 
@@ -502,8 +502,8 @@ describe("token-guard", () => {
           tokenGuardState.id,
           sender.publicKey,
           sender.publicKey,
-          gatekeeperNetwork.publicKey,
           exchangeAmount,
+          gatekeeperNetwork.publicKey,
           someRandomMembershipTokenATA
         );
 
@@ -535,8 +535,8 @@ describe("token-guard", () => {
           tokenGuardState.id,
           sender.publicKey,
           sender.publicKey,
-          gatekeeperNetwork.publicKey,
           exchangeAmount,
+          gatekeeperNetwork.publicKey,
           someOtherTokenATA
         );
 
@@ -562,8 +562,8 @@ describe("token-guard", () => {
           tokenGuardState.id,
           sender.publicKey,
           sender.publicKey,
-          gatekeeperNetwork.publicKey,
           exchangeAmount,
+          gatekeeperNetwork.publicKey,
           senderMembershipTokenATA
         );
 
@@ -634,8 +634,8 @@ describe("token-guard", () => {
           tokenGuardState = await initialize(
             program,
             provider,
-            gatekeeperNetwork.publicKey,
             recipient.publicKey,
+            gatekeeperNetwork.publicKey,
             undefined,
             undefined,
             undefined,
@@ -653,8 +653,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            gatekeeperNetwork.publicKey,
-            exchangeAmount
+            exchangeAmount,
+            gatekeeperNetwork.publicKey
           );
 
           return expect(shouldFail).to.be.rejectedWith(
@@ -671,8 +671,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            gatekeeperNetwork.publicKey,
             exchangeAmount,
+            gatekeeperNetwork.publicKey,
             senderMembershipTokenATA
           );
 
@@ -685,8 +685,8 @@ describe("token-guard", () => {
           tokenGuardState = await initialize(
             program,
             provider,
-            gatekeeperNetwork.publicKey,
             recipient.publicKey,
+            gatekeeperNetwork.publicKey,
             undefined,
             undefined,
             undefined,
@@ -704,7 +704,57 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
+            exchangeAmount,
+            gatekeeperNetwork.publicKey
+          );
+
+          return expect(shouldFail).to.be.rejectedWith(
+            /Membership token account not found/
+          );
+        });
+
+        it("should let someone with the token exchange", async () => {
+          await checkBalanceAndSend(nft, nftMinter, sender.publicKey);
+
+          const instructions = await exchange(
+            provider.connection,
+            program,
+            tokenGuardState.id,
+            sender.publicKey,
+            sender.publicKey,
+            exchangeAmount,
             gatekeeperNetwork.publicKey,
+            senderMembershipTokenATA
+          );
+
+          await sendTransactionFromSender(instructions);
+        });
+      });
+
+      context("Creator strategy without a gateway token", () => {
+        it("should initialize a tokenGuard that requires presentation of an NFT but not a gateway token", async () => {
+          tokenGuardState = await initialize(
+            program,
+            provider,
+            recipient.publicKey,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              key: nftMinter.publicKey,
+              strategy: "NFT-Creator",
+            }
+          );
+        });
+
+        it("should not let someone without the membership token exchange", async () => {
+          const shouldFail = exchange(
+            provider.connection,
+            program,
+            tokenGuardState.id,
+            sender.publicKey,
+            sender.publicKey,
             exchangeAmount
           );
 
@@ -722,8 +772,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            gatekeeperNetwork.publicKey,
             exchangeAmount,
+            undefined,
             senderMembershipTokenATA
           );
 
@@ -736,8 +786,8 @@ describe("token-guard", () => {
           tokenGuardState = await initialize(
             program,
             provider,
-            gatekeeperNetwork.publicKey,
             recipient.publicKey,
+            gatekeeperNetwork.publicKey,
             undefined,
             1,
             undefined,
@@ -758,8 +808,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            gatekeeperNetwork.publicKey,
             exchangeAmount,
+            gatekeeperNetwork.publicKey,
             senderMembershipTokenATA
           );
 
@@ -790,8 +840,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender2.publicKey,
             sender2.publicKey,
-            gatekeeperNetwork.publicKey,
             exchangeAmount,
+            gatekeeperNetwork.publicKey,
             sender2MembershipTokenATA
           );
 
