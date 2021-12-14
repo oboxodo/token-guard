@@ -230,8 +230,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         sender.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount
+        exchangeAmount,
+        gatekeeperNetwork.publicKey
       );
 
       await sendTransactionFromSender(instructions);
@@ -267,8 +267,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         provider.wallet.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount
+        exchangeAmount,
+        gatekeeperNetwork.publicKey
       );
 
       const { burnerATA, createBurnerATAInstruction } = await createBurnerATA(
@@ -311,8 +311,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         provider.wallet.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount
+        exchangeAmount,
+        gatekeeperNetwork.publicKey
       );
 
       const { burnerATA, createBurnerATAInstruction } = await createBurnerATA(
@@ -355,8 +355,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         sender.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount
+        exchangeAmount,
+        gatekeeperNetwork.publicKey
       );
 
       console.log("First exchange");
@@ -391,8 +391,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         sender.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount
+        exchangeAmount,
+        gatekeeperNetwork.publicKey
       );
 
       const instructionsForAnExchangeThatIsSmallEnough = await exchange(
@@ -401,8 +401,8 @@ describe("token-guard", () => {
         tokenGuardState.id,
         sender.publicKey,
         sender.publicKey,
-        gatekeeperNetwork.publicKey,
-        exchangeAmount - 100
+        exchangeAmount - 100,
+        gatekeeperNetwork.publicKey
       );
 
       await sendTransactionFromSender(
@@ -458,8 +458,8 @@ describe("token-guard", () => {
           tokenGuardState.id,
           sender.publicKey,
           sender.publicKey,
-          gatekeeperNetwork.publicKey,
-          exchangeAmount
+          exchangeAmount,
+          gatekeeperNetwork.publicKey
         );
 
         return expect(shouldFail).to.be.rejectedWith(
@@ -478,8 +478,8 @@ describe("token-guard", () => {
           tokenGuardState.id,
           sender.publicKey,
           sender.publicKey,
-          gatekeeperNetwork.publicKey,
           exchangeAmount,
+          gatekeeperNetwork.publicKey,
           senderMembershipTokenATA
         );
 
@@ -502,8 +502,8 @@ describe("token-guard", () => {
           tokenGuardState.id,
           sender.publicKey,
           sender.publicKey,
-          gatekeeperNetwork.publicKey,
           exchangeAmount,
+          gatekeeperNetwork.publicKey,
           someRandomMembershipTokenATA
         );
 
@@ -535,8 +535,8 @@ describe("token-guard", () => {
           tokenGuardState.id,
           sender.publicKey,
           sender.publicKey,
-          gatekeeperNetwork.publicKey,
           exchangeAmount,
+          gatekeeperNetwork.publicKey,
           someOtherTokenATA
         );
 
@@ -562,8 +562,8 @@ describe("token-guard", () => {
           tokenGuardState.id,
           sender.publicKey,
           sender.publicKey,
-          gatekeeperNetwork.publicKey,
           exchangeAmount,
+          gatekeeperNetwork.publicKey,
           senderMembershipTokenATA
         );
 
@@ -653,8 +653,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            gatekeeperNetwork.publicKey,
-            exchangeAmount
+            exchangeAmount,
+            gatekeeperNetwork.publicKey
           );
 
           return expect(shouldFail).to.be.rejectedWith(
@@ -671,8 +671,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            gatekeeperNetwork.publicKey,
             exchangeAmount,
+            gatekeeperNetwork.publicKey,
             senderMembershipTokenATA
           );
 
@@ -704,8 +704,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            gatekeeperNetwork.publicKey,
-            exchangeAmount
+            exchangeAmount,
+            gatekeeperNetwork.publicKey
           );
 
           return expect(shouldFail).to.be.rejectedWith(
@@ -722,8 +722,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            gatekeeperNetwork.publicKey,
             exchangeAmount,
+            gatekeeperNetwork.publicKey,
             senderMembershipTokenATA
           );
 
@@ -755,7 +755,6 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            undefined,
             exchangeAmount
           );
 
@@ -773,8 +772,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            undefined,
             exchangeAmount,
+            undefined,
             senderMembershipTokenATA
           );
 
@@ -809,8 +808,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender.publicKey,
             sender.publicKey,
-            gatekeeperNetwork.publicKey,
             exchangeAmount,
+            gatekeeperNetwork.publicKey,
             senderMembershipTokenATA
           );
 
@@ -841,8 +840,8 @@ describe("token-guard", () => {
             tokenGuardState.id,
             sender2.publicKey,
             sender2.publicKey,
-            gatekeeperNetwork.publicKey,
             exchangeAmount,
+            gatekeeperNetwork.publicKey,
             sender2MembershipTokenATA
           );
 
